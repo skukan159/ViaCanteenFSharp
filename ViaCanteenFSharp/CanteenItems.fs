@@ -1,4 +1,4 @@
-﻿module Modules
+﻿module CanteenItems
 
 (*
 Design a type to represent different types of food in the canteen.
@@ -13,7 +13,7 @@ You will also need to define
 the price calculation function that uses pattern matching.
 *)
 
-type Salad = Chicken | Danish | Swedish 
+type Salad = Chicken | Danish | Vegetarian 
 type Sandwich = Poultry | Fish | Vegan
 type Cake = Chocolate | Strawberry | IceCream
 type Size = | Small | Medium | Large
@@ -32,7 +32,7 @@ let CalculateSaladPrice (salad : Salad) =
     match salad with
     | Chicken -> 20.0
     | Danish -> 25.0
-    | Swedish -> 30.0
+    | Vegetarian -> 30.0
     | _ -> failwith "Salad not recognized"
 
 let CalculateSandwichPrice (sandwich : Sandwich) =
