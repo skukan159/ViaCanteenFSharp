@@ -14,7 +14,7 @@ the price calculation function that uses pattern matching.
 *)
 
 type Salad = Chicken | Danish | Swedish 
-type Sandwich = Poultry | Fish | Vegetarian
+type Sandwich = Poultry | Fish | Vegan
 type Cake = Chocolate | Strawberry | IceCream
 type Size = | Small | Medium | Large
 type CanteenItem = | Salad of Salad * Size 
@@ -39,7 +39,7 @@ let CalculateSandwichPrice (sandwich : Sandwich) =
     match sandwich with
     | Poultry -> 30.0
     | Fish -> 25.0
-    | Vegetarian -> 30.0
+    | Vegan -> 30.0
     | _ -> failwith "Sandwich not recognized"
 
 let CalculateCakePrice (cake : Cake) =
@@ -57,10 +57,6 @@ let CalculateCanteenItemPrice (canteenItem : CanteenItem) =
     | _ -> failwith "Canteen item not recognized" 
 
 
-let salad = Salad(Salad.Chicken, Size.Large)
-let cake = Cake(Cake.Chocolate, Size.Medium)
-let sandwich = Sandwich(Sandwich.Poultry, Size.Small)
-
-
-
-
+let largeChickenSalad = Salad(Salad.Chicken, Size.Large)
+let mediumChocolateCake = Cake(Cake.Chocolate, Size.Medium)
+let smallPoultrySandwich = Sandwich(Sandwich.Poultry, Size.Small)

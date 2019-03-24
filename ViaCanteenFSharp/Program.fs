@@ -8,9 +8,9 @@ open System
 let main argv = 
 
 
-    printfn "%F" (CalculateCanteenItemPrice salad)
-    printfn "%F" (CalculateCanteenItemPrice cake)
-    printfn "%F" (CalculateCanteenItemPrice sandwich)
+    printfn "%F" (CalculateCanteenItemPrice largeChickenSalad)
+    printfn "%F" (CalculateCanteenItemPrice mediumChocolateCake)
+    printfn "%F" (CalculateCanteenItemPrice smallPoultrySandwich)
 
     Console.ReadLine()
     0 // return an integer exit code
