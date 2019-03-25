@@ -13,13 +13,13 @@ You will also need to define
 the price calculation function that uses pattern matching.
 *)
 
-type Salad = Chicken | Danish | Vegetarian 
-type Sandwich = Poultry | Fish | Vegan
-type Cake = Chocolate | Strawberry | IceCream
+type SaladType = Chicken | Danish | Vegetarian 
+type SandwichType = Poultry | Fish | Vegan
+type CakeType = Chocolate | Strawberry | IceCream
 type Size = | Small | Medium | Large
-type CanteenItem = | Salad of Salad * Size 
-                   | Sandwich of Sandwich * Size
-                   | Cake of Cake * Size
+type CanteenItem = | Salad of SaladType * Size 
+                   | Sandwich of SandwichType * Size
+                   | Cake of CakeType * Size
 
 let CalculateItemPriceBySize (size : Size) =
     match size with
@@ -28,22 +28,22 @@ let CalculateItemPriceBySize (size : Size) =
     | Large -> 1.5
     | _ -> failwith "Size not recognized"
 
-let CalculateSaladPrice (salad : Salad) =
-    match salad with
+let CalculateSaladPrice (saladType : SaladType) =
+    match saladType with
     | Chicken -> 20.0
     | Danish -> 25.0
     | Vegetarian -> 30.0
     | _ -> failwith "Salad not recognized"
 
-let CalculateSandwichPrice (sandwich : Sandwich) =
-    match sandwich with
+let CalculateSandwichPrice (sandwichType : SandwichType) =
+    match sandwichType with
     | Poultry -> 30.0
     | Fish -> 25.0
     | Vegan -> 30.0
     | _ -> failwith "Sandwich not recognized"
 
-let CalculateCakePrice (cake : Cake) =
-    match cake with
+let CalculateCakePrice (cakeType : CakeType) =
+    match cakeType with
     | Chocolate -> 15.0
     | Strawberry -> 10.0
     | IceCream -> 20.0
@@ -57,6 +57,6 @@ let CalculateCanteenItemPrice (canteenItem : CanteenItem) =
     | _ -> failwith "Canteen item not recognized" 
 
 
-let largeChickenSalad = Salad(Salad.Chicken, Size.Large)
-let mediumChocolateCake = Cake(Cake.Chocolate, Size.Medium)
-let smallPoultrySandwich = Sandwich(Sandwich.Poultry, Size.Small)
+let largeChickenSalad = Salad(Chicken, Size.Large)
+let mediumChocolateCake = Cake(Chocolate, Size.Medium)
+let smallPoultrySandwich = Sandwich(Poultry, Size.Small)
