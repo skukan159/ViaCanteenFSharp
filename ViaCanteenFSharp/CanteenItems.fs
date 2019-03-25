@@ -57,6 +57,6 @@ let CalculateCanteenItemPrice (canteenItem : CanteenItem) =
     | _ -> failwith "Canteen item not recognized" 
 
 
-let largeChickenSalad = Salad(Chicken, Size.Large)
-let mediumChocolateCake = Cake(Chocolate, Size.Medium)
-let smallPoultrySandwich = Sandwich(Poultry, Size.Small)
+let largeChickenSalad = Salad(Chicken, Large)
+let mediumChocolateCake = Cake(Chocolate, Medium)
+let smallPoultrySandwich = Sandwich(Poultry, Small)
