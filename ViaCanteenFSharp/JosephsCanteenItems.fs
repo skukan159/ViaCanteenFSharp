@@ -19,21 +19,21 @@ type Size = | Small | Medium | Large
 
 type CanteenItem = Item of ItemType * Size
 
-let CalculateItemPriceBySize (size : Size) =
+let calculateItemPriceBySize (size : Size) =
     match size with
     | Small -> 0.5
     | Medium -> 1.0
     | Large -> 1.5
     | _ -> failwith "Size not recognized"
 
-let CalculateSaladPrice (saladType : ItemType) =
+let calculateSaladPrice (saladType : ItemType) =
     match saladType with
     | ChickenSalad -> 20.0
     | DanishSalad -> 25.0
     | VegetarianSalad -> 30.0
     | _ -> failwith "Salad not recognized"
 
-let CalculateSandwichPrice (sandwichType : ItemType) =
+let calculateSandwichPrice (sandwichType : ItemType) =
     match sandwichType with
     | PoultrySandwich -> 30.0
 
@@ -41,19 +41,19 @@ let CalculateSandwichPrice (sandwichType : ItemType) =
     | VeganSandwich -> 30.0
     | _ -> failwith "Sandwich not recognized"
 
-let CalculateCakePrice (cakeType : ItemType) =
+let calculateCakePrice (cakeType : ItemType) =
     match cakeType with
     | ChocolateCake -> 15.0
     | StrawberryCake -> 10.0
     | IceCreamCake -> 20.0
     | _ -> failwith "Cake not recognized"
 
-let CalculateCanteenItemPrice (canteenItemType : ItemType) (canteenItemSize : Size) =
+let calculateCanteenItemPrice (canteenItemType : ItemType) (canteenItemSize : Size) =
     
     match canteenItemType with
-    | ChickenSalad | DanishSalad |VegetarianSalad -> CalculateSaladPrice canteenItemType * CalculateItemPriceBySize canteenItemSize 
-    | PoultrySandwich | FishSandwich |VeganSandwich -> CalculateSandwichPrice canteenItemType *  CalculateItemPriceBySize canteenItemSize 
-    | ChocolateCake | StrawberryCake | IceCreamCake -> CalculateCakePrice canteenItemType * CalculateItemPriceBySize canteenItemSize
+    | ChickenSalad | DanishSalad |VegetarianSalad -> calculateSaladPrice canteenItemType * calculateItemPriceBySize canteenItemSize 
+    | PoultrySandwich | FishSandwich |VeganSandwich -> calculateSandwichPrice canteenItemType *  calculateItemPriceBySize canteenItemSize 
+    | ChocolateCake | StrawberryCake | IceCreamCake -> calculateCakePrice canteenItemType * calculateItemPriceBySize canteenItemSize
     | _ -> failwith "Canteen item not recognized" 
 
 
@@ -64,4 +64,4 @@ let smallPoultry = PoultrySandwich, Small
 
 let testVegetarian = VegetarianSalad, Large
 
-CalculateCanteenItemPrice VegetarianSalad Large
+calculateCanteenItemPrice VegetarianSalad Large
