@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="CanteenItems.fs" />
-    <Compile Include="JosephsSpecialCanteenItems.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <Content Include="packages.config" />

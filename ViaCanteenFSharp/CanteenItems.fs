@@ -13,13 +13,10 @@ You will also need to define
 the price calculation function that uses pattern matching.
 *)
 
-type SaladType = Chicken | Danish | Vegetarian 
-type SandwichType = Poultry | Fish | Vegan
-type CakeType = Chocolate | Strawberry | IceCream
+type ItemType = Chicken | Danish | Vegetarian | Poultry | Fish | Vegan | Chocolate | Strawberry | IceCream
 type Size = | Small | Medium | Large
-type CanteenItem = | Salad of SaladType * Size 
-                   | Sandwich of SandwichType * Size
-                   | Cake of CakeType * Size
+
+type CanteenItem = Item of ItemType * Size
 
 let CalculateItemPriceBySize (size : Size) =
     match size with
@@ -28,35 +25,43 @@ let CalculateItemPriceBySize (size : Size) =
     | Large -> 1.5
     | _ -> failwith "Size not recognized"
 
-let CalculateSaladPrice (saladType : SaladType) =
+let CalculateSaladPrice (saladType : ItemType) =
     match saladType with
     | Chicken -> 20.0
     | Danish -> 25.0
     | Vegetarian -> 30.0
     | _ -> failwith "Salad not recognized"
 
-let CalculateSandwichPrice (sandwichType : SandwichType) =
+let CalculateSandwichPrice (sandwichType : ItemType) =
     match sandwichType with
     | Poultry -> 30.0
     | Fish -> 25.0
     | Vegan -> 30.0
     | _ -> failwith "Sandwich not recognized"
 
-let CalculateCakePrice (cakeType : CakeType) =
+let CalculateCakePrice (cakeType : ItemType) =
     match cakeType with
     | Chocolate -> 15.0
     | Strawberry -> 10.0
     | IceCream -> 20.0
     | _ -> failwith "Cake not recognized"
 
-let CalculateCanteenItemPrice (canteenItem : CanteenItem) =
-    match canteenItem with
-    | Salad(saladType, saladSize) -> CalculateSaladPrice saladType * CalculateItemPriceBySize saladSize 
-    | Sandwich (sandwichType, sandwichSize) -> CalculateSandwichPrice sandwichType *  CalculateItemPriceBySize sandwichSize 
-    | Cake (cakeType, cakeSize) -> CalculateCakePrice cakeType * CalculateItemPriceBySize cakeSize
+let CalculateCanteenItemPrice (canteenItemType : ItemType) (canteenItemSize : Size) =
+    
+    match canteenItemType with
+    | Chicken | Danish | Vegetarian -> CalculateSaladPrice canteenItemType * CalculateItemPriceBySize canteenItemSize 
+    | Poultry | Fish | Vegan -> CalculateSandwichPrice canteenItemType *  CalculateItemPriceBySize canteenItemSize 
+    | Chocolate | Strawberry | IceCream -> CalculateCakePrice canteenItemType * CalculateItemPriceBySize canteenItemSize
     | _ -> failwith "Canteen item not recognized" 
 
 
-let largeChickenSalad = Salad(Chicken, Large)
-let mediumChocolateCake = Cake(Chocolate, Medium)
-let smallPoultrySandwich = Sandwich(Poultry, Small)
+let largeChicken = Chicken, Large
+let mediumChocolate = Chocolate, Medium
+let smallPoultry = Poultry, Small
+let largeVegetarian = Vegetarian, Large
+
+CalculateCanteenItemPrice Chicken, Large
+CalculateCanteenItemPrice Chocolate, Medium
+CalculateCanteenItemPrice Vegetarian Large
+CalculateCanteenItemPrice Poultry, Small
+CalculateCanteenItemPrice Vegetarian, Large
