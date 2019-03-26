@@ -62,4 +62,6 @@ let mediumChocolateCake = Cake(Chocolate, Medium)
 let smallPoultrySandwich = Sandwich(Poultry, Small)
 
 //Write this in teh F# interactive
-calculateCanteenItemPrice (Salad(Chicken, Large))
+let testLargeChicken = calculateCanteenItemPrice (Salad(Chicken, Large))
+let testMediumChocolate = calculateCanteenItemPrice mediumChocolateCake
+let testSmallPoultry = calculateCanteenItemPrice smallPoultrySandwich
