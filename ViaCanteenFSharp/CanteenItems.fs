@@ -21,42 +21,45 @@ type CanteenItem = | Salad of SaladType * Size
                    | Sandwich of SandwichType * Size
                    | Cake of CakeType * Size
 
-let CalculateItemPriceBySize (size : Size) =
+let calculateItemPriceBySize (size : Size) =
     match size with
     | Small -> 0.5
     | Medium -> 1.0
     | Large -> 1.5
     | _ -> failwith "Size not recognized"
 
-let CalculateSaladPrice (saladType : SaladType) =
+let calculateSaladPrice (saladType : SaladType) =
     match saladType with
     | Chicken -> 20.0
     | Danish -> 25.0
     | Vegetarian -> 30.0
     | _ -> failwith "Salad not recognized"
 
-let CalculateSandwichPrice (sandwichType : SandwichType) =
+let calculateSandwichPrice (sandwichType : SandwichType) =
     match sandwichType with
     | Poultry -> 30.0
     | Fish -> 25.0
     | Vegan -> 30.0
     | _ -> failwith "Sandwich not recognized"
 
-let CalculateCakePrice (cakeType : CakeType) =
+let calculateCakePrice (cakeType : CakeType) =
     match cakeType with
     | Chocolate -> 15.0
     | Strawberry -> 10.0
     | IceCream -> 20.0
     | _ -> failwith "Cake not recognized"
 
-let CalculateCanteenItemPrice (canteenItem : CanteenItem) =
+let calculateCanteenItemPrice (canteenItem : CanteenItem) =
     match canteenItem with
-    | Salad(saladType, saladSize) -> CalculateSaladPrice saladType * CalculateItemPriceBySize saladSize 
-    | Sandwich (sandwichType, sandwichSize) -> CalculateSandwichPrice sandwichType *  CalculateItemPriceBySize sandwichSize 
-    | Cake (cakeType, cakeSize) -> CalculateCakePrice cakeType * CalculateItemPriceBySize cakeSize
+    | Salad(saladType, saladSize) -> calculateSaladPrice saladType * calculateItemPriceBySize saladSize 
+    | Sandwich (sandwichType, sandwichSize) -> calculateSandwichPrice sandwichType *  calculateItemPriceBySize sandwichSize 
+    | Cake (cakeType, cakeSize) -> calculateCakePrice cakeType * calculateItemPriceBySize cakeSize
     | _ -> failwith "Canteen item not recognized" 
 
 
 let largeChickenSalad = Salad(Chicken, Large)
 let mediumChocolateCake = Cake(Chocolate, Medium)
 let smallPoultrySandwich = Sandwich(Poultry, Small)
+
+//Write this in teh F# interactive
+calculateCanteenItemPrice (Salad(Chicken, Large))
