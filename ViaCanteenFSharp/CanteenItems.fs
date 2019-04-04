@@ -56,12 +56,7 @@ let calculateCanteenItemPrice (canteenItem : CanteenItem) =
     | Cake (cakeType, cakeSize) -> calculateCakePrice cakeType * calculateItemPriceBySize cakeSize
     | _ -> failwith "Canteen item not recognized" 
 
-
-let largeChickenSalad = Salad(Chicken, Large)
-let mediumChocolateCake = Cake(Chocolate, Medium)
-let smallPoultrySandwich = Sandwich(Poultry, Small)
-
-//Write this in teh F# interactive
+//Write this in the F# interactive
 let testLargeChicken = calculateCanteenItemPrice (Salad(Chicken, Large))
-let testMediumChocolate = calculateCanteenItemPrice mediumChocolateCake
-let testSmallPoultry = calculateCanteenItemPrice smallPoultrySandwich
+let testMediumChocolate = calculateCanteenItemPrice (Cake(Chocolate, Medium))
+let testSmallPoultry = calculateCanteenItemPrice (Sandwich(Poultry, Small))
