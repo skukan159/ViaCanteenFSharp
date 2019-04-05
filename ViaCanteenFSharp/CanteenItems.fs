@@ -1,6 +1,6 @@
 ﻿module CanteenItems
 
-(*
+(* Phase 1:
 Design a type to represent different types of food in the canteen.
 Implement price calculation
 Have at least:
@@ -12,6 +12,34 @@ and the content (for instance a bag/wrap) with the size (record).
 You will also need to define
 the price calculation function that uses pattern matching.
 *)
+
+
+(* Phase 2:
+Implement a function to order foor items from(or leave comment to)
+The canteen in a concurrent way.
+Hints: The OrderFood message processing should use the price
+calculation function that returns the price of the specified
+food item multiplied by the given quantity:
+
+F# has both shared memory concurrency and message passing concurrency.
+As discussed during the lessons, F# has a build in mailbox processor
+concept that is popular in Erlang language. This built in mailbox
+processor is defined in the F# library as a type called MailboxProcessor
+and usually reffered to as an Agent or Actor
+
+type CanteenMessage = | OrderFood of AllFood * int // food qty
+                      | LeaveAComment of string //"Delicious salad"
+
+Implement a canteen agent(call it canteenFoodAgent) that receives a 
+CanteenMessage declared above and prints a message with the price of
+the food item to the sender(for OrderFood). Further, a second message
+LeaveAComment of string (ie. "Comment") to leave a string comment to
+the canteen operators. Acknowledge the comments with your own ideas.
+
+Example: > canteenFoodAgent.Post (OrderFood(ViaSalad {Food=Vegie;Size=Large}, 4));;
+Should give for instance: > Please pay DKK128.0 for your order of 4 ViaSalad.Thanks!
+*)
+
 
 type SaladType = Chicken | Danish | Vegetarian 
 type SandwichType = Poultry | Fish | Vegan
