@@ -90,40 +90,38 @@ let testSmallPoultry = calculateCanteenItemPrice (Sandwich(Poultry, Small))
 
 
 
-type CanteenMessage = | OrderFood of CanteenItem * int // food qty
-                      | LeaveAComment of string //"Delicious salad"
+type CanteenMessage = | OrderFood of CanteenItem * int 
+                      | LeaveAComment of string 
 
 let printCanteenItem (canteenItem : CanteenItem) =
     match canteenItem with
-    | Salad (itemType, size) -> itemType.ToString()
-    | Sandwich(itemType, size) ->itemType.ToString()
-    | Cake (itemType, size)->  itemType.ToString()
+    | Salad (itemType, _ ) -> itemType.ToString() + " Salad"
+    | Sandwich(itemType, _ ) -> itemType.ToString() + " Sandwich"
+    | Cake (itemType, _ )->  itemType.ToString() + " Cake"
     | _ -> failwith "Invalid canteen item type"
 
 
 let processFoodOrder item amount =
     let itemName = printCanteenItem item
-    let price = calculateCanteenItemPrice item * amount
-    let msg = "Please pay " + price.ToString() + " DKK for your order of " + amount.ToString() + " " + itemName + ". Thank you!"
+    let totalPrice = calculateCanteenItemPrice item * amount
+    let msg = "Please pay " + totalPrice.ToString() + " DKK for your order of " + amount.ToString() + " " + itemName + ". Thank you!"
     msg
 
 let processComment comment =
-    let msg = "Your comment was: " + comment + ". Thank you for your input!"
+    let msg = "Your comment was: " + comment + ". Thank you!"
     msg
 
 let processMessage message =
     match message with
     | OrderFood (item, amount) -> processFoodOrder item (float amount)
     | LeaveAComment (comment) -> processComment comment
-    | _ -> failwith "Invalid message request..."
+    | _ -> failwith "Invalid message request"
 
 
 let canteenFoodAgent = new MailboxProcessor<CanteenMessage>(fun inbox ->
     let rec loop =
-        async { printfn "Waiting for next message."
-                let! msg = inbox.Receive()
-                printfn "Message received.  %A" msg
-                printfn "Processed message ==> %s" (processMessage msg)
+        async { let! msg = inbox.Receive()
+                printfn "%s" (processMessage msg)
                 return! loop
               }
     loop)
