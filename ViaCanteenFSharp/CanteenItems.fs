@@ -38,6 +38,7 @@ Example: > canteenFoodAgent.Post (OrderFood(ViaSalad {Food=Vegie;Size=Large}, 4)
 Should give for instance: > Please pay DKK128.0 for your order of 4 ViaSalad.Thanks!
 *)
 
+// Phase 1
 type SaladType = Chicken | Danish | Vegetarian 
 type SandwichType = Poultry | Fish | Vegan
 type CakeType = Chocolate | Strawberry | IceCream
@@ -81,14 +82,14 @@ let calculateCanteenItemPrice (canteenItem : CanteenItem) =
     | Cake (cakeType, cakeSize) -> calculateCakePrice cakeType * calculateItemPriceBySize cakeSize
     | _ -> failwith "Canteen item not recognized" 
 
-//Write this in the F# interactive
+// Write this in the F# interactive
 let testLargeChicken = calculateCanteenItemPrice (Salad(Chicken, Large))
 let testMediumChocolate = calculateCanteenItemPrice (Cake(Chocolate, Medium))
 let testSmallPoultry = calculateCanteenItemPrice (Sandwich(Poultry, Small))
 
 
 
-
+// Phase 2
 
 type CanteenMessage = | OrderFood of CanteenItem * int 
                       | LeaveAComment of string 
@@ -122,8 +123,8 @@ let canteenFoodAgent = new MailboxProcessor<CanteenMessage>(fun inbox ->
     let rec loop =
         async { let! msg = inbox.Receive()
                 printfn "%s" (processMessage msg)
-                return! loop
-              }
+                return! loop (* Continuously listen for new messages *)
+        }
     loop)
 
 canteenFoodAgent.Start()
@@ -132,10 +133,9 @@ let canteenItem1 = Salad(Chicken, Large)
 let canteenItem2 = Cake(Chocolate, Medium)
 let canteenItem3 = Sandwich(Poultry, Small)
 
-let comment1 = "This place is digusting"
-let comment2 = "I like it but would prefer more vegan products"
+let comment1 = "This place is digusting."
+let comment2 = "I like it but would prefer more vegan products."
 let comment3 = "It has very cheap prices. Good good for students."
-
 
 canteenFoodAgent.Post (OrderFood (canteenItem1, 4))
 canteenFoodAgent.Post (OrderFood (canteenItem2, 2))
