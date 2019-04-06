@@ -12,10 +12,8 @@ and the content (for instance a bag/wrap) with the size (record).
 You will also need to define
 the price calculation function that uses pattern matching.
 *)
-
-
 (* Phase 2:
-Implement a function to order foor items from(or leave comment to)
+Implement a function to order food items from(or leave comment to)
 The canteen in a concurrent way.
 Hints: The OrderFood message processing should use the price
 calculation function that returns the price of the specified
@@ -39,7 +37,6 @@ the canteen operators. Acknowledge the comments with your own ideas.
 Example: > canteenFoodAgent.Post (OrderFood(ViaSalad {Food=Vegie;Size=Large}, 4));;
 Should give for instance: > Please pay DKK128.0 for your order of 4 ViaSalad.Thanks!
 *)
-
 
 type SaladType = Chicken | Danish | Vegetarian 
 type SandwichType = Poultry | Fish | Vegan
@@ -69,7 +66,7 @@ let calculateSandwichPrice (sandwichType : SandwichType) =
     | Fish -> 25.0
     | Vegan -> 30.0
     | _ -> failwith "Sandwich not recognized"
-
+    
 let calculateCakePrice (cakeType : CakeType) =
     match cakeType with
     | Chocolate -> 15.0
@@ -88,3 +85,64 @@ let calculateCanteenItemPrice (canteenItem : CanteenItem) =
 let testLargeChicken = calculateCanteenItemPrice (Salad(Chicken, Large))
 let testMediumChocolate = calculateCanteenItemPrice (Cake(Chocolate, Medium))
 let testSmallPoultry = calculateCanteenItemPrice (Sandwich(Poultry, Small))
+
+
+
+
+
+type CanteenMessage = | OrderFood of CanteenItem * int // food qty
+                      | LeaveAComment of string //"Delicious salad"
+
+let printCanteenItem (canteenItem : CanteenItem) =
+    match canteenItem with
+    | Salad (itemType, size) -> itemType.ToString()
+    | Sandwich(itemType, size) ->itemType.ToString()
+    | Cake (itemType, size)->  itemType.ToString()
+    | _ -> failwith "Invalid canteen item type"
+
+
+let processFoodOrder item amount =
+    let itemName = printCanteenItem item
+    let price = calculateCanteenItemPrice item * amount
+    let msg = "Please pay " + price.ToString() + " DKK for your order of " + amount.ToString() + " " + itemName + ". Thank you!"
+    msg
+
+let processComment comment =
+    let msg = "Your comment was: " + comment + ". Thank you for your input!"
+    msg
+
+let processMessage message =
+    match message with
+    | OrderFood (item, amount) -> processFoodOrder item (float amount)
+    | LeaveAComment (comment) -> processComment comment
+    | _ -> failwith "Invalid message request..."
+
+
+let canteenFoodAgent = new MailboxProcessor<CanteenMessage>(fun inbox ->
+    let rec loop =
+        async { printfn "Waiting for next message."
+                let! msg = inbox.Receive()
+                printfn "Message received.  %A" msg
+                printfn "Processed message ==> %s" (processMessage msg)
+                return! loop
+              }
+    loop)
+
+canteenFoodAgent.Start()
+
+let canteenItem1 = Salad(Chicken, Large)
+let canteenItem2 = Cake(Chocolate, Medium)
+let canteenItem3 = Sandwich(Poultry, Small)
+
+let comment1 = "This place is digusting"
+let comment2 = "I like it but would prefer more vegan products"
+let comment3 = "It has very cheap prices. Good good for students."
+
+
+canteenFoodAgent.Post (OrderFood (canteenItem1, 4))
+canteenFoodAgent.Post (OrderFood (canteenItem2, 2))
+canteenFoodAgent.Post (OrderFood (canteenItem3, 10))
+
+canteenFoodAgent.Post (LeaveAComment (comment1))
+canteenFoodAgent.Post (LeaveAComment (comment2))
+canteenFoodAgent.Post (LeaveAComment (comment3))
