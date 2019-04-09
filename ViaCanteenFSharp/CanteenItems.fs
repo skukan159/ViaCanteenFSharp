@@ -133,7 +133,7 @@ let canteenItem1 = Salad(Chicken, Large)
 let canteenItem2 = Cake(Chocolate, Medium)
 let canteenItem3 = Sandwich(Poultry, Small)
 
-let comment1 = "This place is digusting."
+let comment1 = "This place is disgusting."
 let comment2 = "I like it but would prefer more vegan products."
 let comment3 = "It has very cheap prices. Good good for students."
 
