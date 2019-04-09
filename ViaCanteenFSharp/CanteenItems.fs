@@ -63,21 +63,21 @@ let calculateSaladPrice (saladType : SaladType) =
 
 let calculateSandwichPrice (sandwichType : SandwichType) =
     match sandwichType with
-    | Poultry -> 30.0
     | Fish -> 25.0
-    | Vegan -> 30.0
+    | Poultry -> 30.0
+    | Vegan -> 35.0
     | _ -> failwith "Sandwich not recognized"
     
 let calculateCakePrice (cakeType : CakeType) =
     match cakeType with
-    | Chocolate -> 15.0
     | Strawberry -> 10.0
+    | Chocolate -> 15.0
     | IceCream -> 20.0
     | _ -> failwith "Cake not recognized"
 
 let calculateCanteenItemPrice (canteenItem : CanteenItem) =
     match canteenItem with
-    | Salad(saladType, saladSize) -> calculateSaladPrice saladType * calculateItemPriceBySize saladSize 
+    | Salad (saladType, saladSize) -> calculateSaladPrice saladType * calculateItemPriceBySize saladSize 
     | Sandwich (sandwichType, sandwichSize) -> calculateSandwichPrice sandwichType *  calculateItemPriceBySize sandwichSize 
     | Cake (cakeType, cakeSize) -> calculateCakePrice cakeType * calculateItemPriceBySize cakeSize
     | _ -> failwith "Canteen item not recognized" 
